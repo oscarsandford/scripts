@@ -1,7 +1,19 @@
 #!/usr/bin/env python3
 
+"""
+oes-ldc.py
+List Directory Contents
+
+Considers subdirectories in the directory tree rooted at the execution 
+directory. Outputs an unsorted list of subdirectories and the number of 
+files in their respective subdirectory.
+
+Does not consider files in the current directory.
+"""
+
 import os
 from sys import platform, argv
+
 
 def print_tree(sts, arg, root):
 	print("--------- Start of directory tree contents ---------")
@@ -13,7 +25,6 @@ def print_tree(sts, arg, root):
 		for i in sorted_sts:
 			print(" {:>4} files\t".format(i[1]), i[0][len(root):])
 	print("---------- End of directory tree contents ----------")
-
 
 def make_tree(root):
 	sts = {}
@@ -36,7 +47,6 @@ def make_tree(root):
 			upper_path = path[:len(path)-len(segs[len(segs)-1])-1]
 			if upper_path in sts.keys():
 				del sts[upper_path]
-
 	return sts
 
 # List contents of directory tree then wait for exit queue
