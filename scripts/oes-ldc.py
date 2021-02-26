@@ -9,10 +9,14 @@ directory. Outputs an unsorted list of subdirectories and the number of
 files in their respective subdirectory.
 
 Does not consider files in the current directory.
+
+Oscar Sandford
+Originally created: 2020-10-28
 """
 
 import os
-from sys import platform, argv
+import argparse
+from sys import platform
 
 
 def print_tree(sts, arg, root):
@@ -51,17 +55,25 @@ def make_tree(root):
 
 # List contents of directory tree then wait for exit queue
 def main():
-	root = os.getcwd()
-	# Option to pass a directory
-	if len(argv) == 2:
-		root = argv[1]
-	sts = make_tree(root)
-	valid_args = ["u", "s"]
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-y", "--yestoall", action="store_true", help="Release without asking for further user input.")
+	parser.add_argument("-d", "--directory", default=os.getcwd(), help="Specify target directory to traverse.")
+	group = parser.add_mutually_exclusive_group()
+	group.add_argument("-s", "--sorted", action="store_true")
+	args = parser.parse_args()
 	
-	print_tree(sts, "u", root)
-	while (1):
-		x = input("Type s to see sorted, u to see unsorted. Or just ENTER to exit.")
-		exit(0) if x not in valid_args else print_tree(sts, "s", root)
+	sts = make_tree(args.directory)
+
+	if args.sorted:
+		print_tree(sts, "s", args.directory)
+	else:
+		print_tree(sts, "u", args.directory)
+	
+	# We await user input because it is convenient to also open the script from a file 
+	# explorer. If we don't wait for user input, the terminal window will die instantly. 
+	while (not args.yestoall):
+		x = input("Type s to see sorted, u to see unsorted. Or any other key to exit.")
+		exit(0) if x not in ["u", "s"] else print_tree(sts, "s", args.directory)
 		
 
 if __name__ == '__main__':

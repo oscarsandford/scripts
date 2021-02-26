@@ -13,6 +13,7 @@ A collection of scripts I've written for quality of life and productivity boosts
 <hr>
 
 ## Installation
+<br>
 
 ### Setup
 ```sh
@@ -29,6 +30,12 @@ $ ./install.sh --all
 $ ./install.sh script.py
 ```
 Scripts are installed to `/usr/local/bin`, such that they can be executed by the shell anywhere in the file system.
+<br>
+
+Some scripts require non-standard libraries, which must be installed with a package library. If you have `pip` you can simply install all the dependencies with
+```sh
+$ pip install -r requirements.txt
+```
 <hr>
 
 ## Uninstall
@@ -41,7 +48,8 @@ $ ./uninstall.sh script.py
 <hr>
 
 ## Usage
-Execute **any** script with its arguments from **any directory** in a shell terminal. For example:
+Execute **any** script with its arguments from **any directory** in a shell terminal. 
+Find script-specific usage with 
 ```sh
-$ script.py [args...]
+$ some-script.py --help
 ```
