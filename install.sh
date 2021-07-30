@@ -33,7 +33,7 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-if [ $1 = "--all" ]; then
+if [ $1 = "-a" ]; then
 	InstallAll
 else
 	Install $1

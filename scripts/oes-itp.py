@@ -31,19 +31,20 @@ import argparse
 
 def create_pdf(dir, images, outfname, extns):
 	try:
-		with open(outfname, "wb") as outfile:
-			for dpath, _, fnames in os.walk(dir):
-				for fname in fnames:
-					for ext in extns:
-						if fname.endswith(ext):
-							imagepath = os.path.join(dpath, fname)
-							print(f"Adding {imagepath}...")
-							# image = Image.open(imgpath)
-							images.append(imagepath)
-
-			outfile.write(img2pdf.convert(images))
-			outfile.close()
-			print("Done!")
+		for dpath, _, fnames in os.walk(dir):
+			for fname in fnames:
+				for ext in extns:
+					if fname.endswith(ext):
+						imagepath = os.path.join(dpath, fname)
+						print(f"Adding {imagepath}...")
+						images.append(imagepath)
+			if len(images) > 0:
+				outfile = open(outfname, "wb")
+				outfile.write(img2pdf.convert(images))
+				outfile.close()
+				print("Done!")
+			else:
+				print("No images found.")
 	except Exception as e:
 		outfile.close()
 		exit("Something bad happened:",e)
